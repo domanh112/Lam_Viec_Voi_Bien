@@ -1,19 +1,21 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Data;
 using System.Text;
 
-namespace VietJackCsharp
+namespace Lam_Viec_Voi_Bien
 {
-    class TestCsharp
+    class Program
     {
         static void Main(string[] args)
         {
             Console.OutputEncoding = Encoding.UTF8;
             //Test_String();
             //Test_Number();
-            Test_Date_Time();
+            //Test_Date_Time();
+            Test_DataTable_DataSet_DataSet();
         }
 
-        public static void Test_String()
+        static void Test_String()
         {
 
             Console.Write("nhập vào chuỗi 1 : ");
@@ -50,17 +52,21 @@ namespace VietJackCsharp
             Console.Write("nhập vào chuỗi 2 : ");
             string str2 = Console.ReadLine();
 
+            // Thao tác với mảng String
             string[] lstStr = { str1, str2 };
-            int chu_cai, chu_so, ky_tu_dac_biet, i;
-            chu_cai = chu_so = ky_tu_dac_biet = i = 0;
+            int chu_thuong, chu_hoa, chu_so, ky_tu_dac_biet, i;
+            chu_hoa = chu_thuong = chu_so = ky_tu_dac_biet = i = 0;
 
             // đếm số chữ cái, số chữ số, số ký tự đặc biệt trong 2 chuỗi
             foreach (string a in lstStr)
             {
                 while (i < a.Length)
                 {
-                    if ((a[i] >= 'a' && a[i] <= 'z') || (a[i] >= 'A' && a[i] <= 'Z'))
-                        chu_cai++;
+                    if ((a[i] >= 'A' && a[i] <= 'Z'))
+                        chu_hoa++;
+
+                    if (a[i] >= 'a' && a[i] <= 'z')
+                        chu_thuong++;
 
                     else if (a[i] >= '0' && a[i] <= '9')
                         chu_so++;
@@ -69,8 +75,9 @@ namespace VietJackCsharp
                     i++;
                 }
                 Console.WriteLine("chuỗi : {0}", a);
-                Console.WriteLine("số chữ cái : {0}\n", chu_cai);
-                Console.WriteLine("số chữ sô : {0}\n", chu_so);
+                Console.WriteLine("số chữ thường : {0}\n", chu_thuong);
+                Console.WriteLine("số chữ hoa : {0}\n", chu_hoa);
+                Console.WriteLine("số chữ số : {0}\n", chu_so);
                 Console.WriteLine("số kí tự đặc biệt : {0}\n", ky_tu_dac_biet);
             }
 
@@ -112,7 +119,17 @@ namespace VietJackCsharp
             else
                 Console.WriteLine("{0} ko là chuỗi con " + "của chuỗi {1}", str2, str1);
 
-            //
+            //thay thế chuỗi con vào 1 khoảng chuỗi cha
+            if (str1.Contains("abc"))
+            {
+                string strThay = str1.Replace("abc", str2);
+
+                // thay thế 2 kí tự cuối 
+                string strChon = str1.Substring(str1.Length - 2, 2);
+                string strThay2 = str1.Replace(strChon, str2);
+                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay);
+                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay2);
+            }
         }
 
         static void Test_Number()
@@ -121,7 +138,6 @@ namespace VietJackCsharp
             a = b = 0;
             double c = 0;
             bool inputFinish = false;
-
             do
             {
                 try
@@ -154,6 +170,24 @@ namespace VietJackCsharp
             int sumDouble = a + b + (int)c;
             Console.WriteLine("tổng 3 số a , b và c : {0} \n", sumDouble);
 
+            //So sánh 2 số
+            if (a > b) Console.WriteLine("a>b");
+            else if (b > a) Console.WriteLine("a<b");
+            else Console.WriteLine("a=b");
+
+            //tìm số lớn nhất||nhỏ nhất 
+            double[] d = { a, b, c };
+
+            double max = d[0];
+            double min = d[0];
+            for (int i = 0; i < d.Length; i++)
+            {
+                if (max < d[i]) max = d[i];
+                if (min > d[i]) min = d[i];
+            }
+            Console.WriteLine("mảng số : {0}", d);
+            Console.WriteLine("số lớn nhất là : {0}", max);
+            Console.WriteLine("số nhỏ nhất là : {0}", min);
         }
 
         static void Test_Date_Time()
@@ -169,15 +203,15 @@ namespace VietJackCsharp
                 {
                     Console.Write("nhập vào ngày(dd):");
                     day = Convert.ToInt32(Console.ReadLine());
-                    if (day >31) Console.WriteLine("nhập lại ngày theo định dạng 'dd' và ko lớn hơn 31");
+                    if (day > 31) Console.WriteLine("nhập lại ngày theo định dạng 'dd' và ko lớn hơn 31");
 
                     Console.Write("nhập vào Tháng(MM):");
                     month = Convert.ToInt32(Console.ReadLine());
-                    if(month>12) Console.WriteLine("nhập lại tháng theo định dạng 'MM' và ko lớn hơn 12");
+                    if (month > 12) Console.WriteLine("nhập lại tháng theo định dạng 'MM' và ko lớn hơn 12");
 
                     Console.Write("nhập vào năm(yyyy):");
                     year = Convert.ToInt32(Console.ReadLine());
-                    if (year>9999) Console.WriteLine("nhập lại năm theo định dạng 'yyyy' và ko lớn hơn 9999");
+                    if (year > 9999) Console.WriteLine("nhập lại năm theo định dạng 'yyyy' và ko lớn hơn 9999");
 
                     dt = new DateTime(year, month, day);
 
@@ -204,6 +238,149 @@ namespace VietJackCsharp
                     Console.WriteLine(ex.Message);
                 }
             } while (inputFinish != true);
+        }
+
+        static void Test_DataTable_DataSet_DataSet()
+        {
+            try
+            {
+                string isClose =null;
+                
+                // khởi tạo DataTable Customer
+                DataTable Customer = new DataTable("Customer");
+
+                DataColumn IdCus = new DataColumn("Id");
+                IdCus.DataType = typeof(int);
+                IdCus.Unique = true;
+                IdCus.AllowDBNull = false;
+                IdCus.Caption = "Student ID";
+                Customer.Columns.Add(IdCus);
+
+                DataColumn NameCus = new DataColumn("Name");
+                NameCus.MaxLength = 50;
+                NameCus.AllowDBNull = false;
+                Customer.Columns.Add(NameCus);
+
+                DataColumn EmailCus = new DataColumn("Email");
+                Customer.Columns.Add(EmailCus);
+
+                Customer.PrimaryKey = new DataColumn[] { IdCus };
+
+                // Thêm rows
+                DataRow rowCus = Customer.NewRow();
+                rowCus["Id"] = 101;
+                rowCus["Name"] = "Cus1";
+                rowCus["Email"] = "Cus.net";
+                Customer.Rows.Add(rowCus);
+
+                Customer.Rows.Add(102, "Cus2", "Cus.net2");
+                Customer.Rows.Add(103, "Cus3", "Cus.net3");
+                Customer.Rows.Add(104, "Cus4", "Cus.net4");
+                Customer.Rows.Add(105, "Cus5", "Cus.net5");
+
+
+                // khởi tạo DataTable Student
+                DataTable Student = new DataTable("Student");
+
+                DataColumn Id = new DataColumn("ID");
+                Id.DataType = typeof(int);
+                Id.Unique = true;
+                Id.AllowDBNull = false;
+                Id.Caption = "Student ID";
+                Student.Columns.Add(Id);
+
+                DataColumn Name = new DataColumn("Name");
+                Name.MaxLength = 50;
+                Name.AllowDBNull = false;
+                Student.Columns.Add(Name);
+
+                DataColumn Email = new DataColumn("Email");
+                Student.Columns.Add(Email);
+
+                Student.PrimaryKey = new DataColumn[] { Id };
+
+                // Thêm rows bằng tay
+                do
+                {
+                    Console.Write("nhập vào ID :");
+                    int idHand = Convert.ToInt32(Console.ReadLine());
+                    Console.Write("nhập vào Name :");
+                    string nameHand = Console.ReadLine();
+                    Console.Write("nhập vào Email :");
+                    string emailHand = Console.ReadLine();
+                    Console.Write("Nếu muốn dừng hãy nhập 'close' : ");
+                    isClose = Console.ReadLine();
+
+                    DataRow rowByHand = Student.NewRow();
+                    rowByHand["Id"] = idHand;
+                    rowByHand["Name"] = nameHand;
+                    rowByHand["Email"] = emailHand;
+                    Student.Rows.Add(rowByHand);
+
+                } while (isClose != "  ");
+
+                // Thêm rows
+                //DataRow row = Student.NewRow();
+                //row["Id"] = 101;
+                //row["Name"] = "Freetuts";
+                //row["Email"] = "Freetuts.net";
+                //Student.Rows.Add(row);
+
+                //Student.Rows.Add(102, "Freetuts2", "Freetuts.net2");
+                //Student.Rows.Add(103, "Freetuts3", "Freetuts.net3");
+                //Student.Rows.Add(104, "Freetuts4", "Freetuts.net4");
+                //Student.Rows.Add(105, "Freetuts5", "Freetuts.net5");
+
+                // sửa rows theo ID
+                foreach (DataRow dataRow in Student.Rows)
+                {
+                    if (dataRow[0].ToString() == "101")
+                    {
+                        dataRow[1]= "sbc";
+                        break;
+                    }
+                }
+
+                // xóa theo rows ID
+                foreach (DataRow dataRow in Student.Rows)
+                {
+                    if (dataRow[0].ToString() == "102")
+                    {
+                        Student.Rows.Remove(dataRow);
+                        Student.AcceptChanges();
+
+                        break;
+                    }
+                }
+
+                // hiển thị giữ liệu trực tiếp qua datatable
+                foreach (DataRow dataRow in Student.Rows)
+                {
+                    Console.WriteLine(dataRow["Id"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"]);
+                }
+                Console.WriteLine("****************************************************************");
+
+                // thêm các dataTable vào DataSet
+                DataSet ds = new DataSet();
+                ds.Tables.Add(Customer);
+                ds.Tables.Add(Student);
+
+                // hiển thị dữ liệu từng Table trong DataSet
+                foreach(DataTable dt in ds.Tables)
+                {
+                    foreach (DataRow dataRow in dt.Rows)
+                    {
+                        Console.WriteLine(dataRow["Id"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"]);
+                    }
+                    Console.WriteLine("****************************************************************");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Co loi!!!\n" + ex);
+            }
+
         }
     }
 }
