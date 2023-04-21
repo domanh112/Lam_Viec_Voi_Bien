@@ -300,36 +300,36 @@ namespace Lam_Viec_Voi_Bien
                 Student.PrimaryKey = new DataColumn[] { Id };
 
                 // Thêm rows bằng tay
-                do
-                {
-                    Console.Write("nhập vào ID :");
-                    int idHand = Convert.ToInt32(Console.ReadLine());
-                    Console.Write("nhập vào Name :");
-                    string nameHand = Console.ReadLine();
-                    Console.Write("nhập vào Email :");
-                    string emailHand = Console.ReadLine();
-                    Console.Write("Nếu muốn dừng hãy nhập 'close' : ");
-                    isClose = Console.ReadLine();
+                //do
+                //{
+                //    Console.Write("nhập vào ID :");
+                //    int idHand = Convert.ToInt32(Console.ReadLine());
+                //    Console.Write("nhập vào Name :");
+                //    string nameHand = Console.ReadLine();
+                //    Console.Write("nhập vào Email :");
+                //    string emailHand = Console.ReadLine();
+                //    Console.Write("Nếu muốn dừng hãy nhập 'close' : ");
+                //    isClose = Console.ReadLine();
 
-                    DataRow rowByHand = Student.NewRow();
-                    rowByHand["Id"] = idHand;
-                    rowByHand["Name"] = nameHand;
-                    rowByHand["Email"] = emailHand;
-                    Student.Rows.Add(rowByHand);
+                //    DataRow rowByHand = Student.NewRow();
+                //    rowByHand["Id"] = idHand;
+                //    rowByHand["Name"] = nameHand;
+                //    rowByHand["Email"] = emailHand;
+                //    Student.Rows.Add(rowByHand);
 
-                } while (isClose != "  ");
+                //} while (isClose != "  ");
 
                 // Thêm rows
-                //DataRow row = Student.NewRow();
-                //row["Id"] = 101;
-                //row["Name"] = "Freetuts";
-                //row["Email"] = "Freetuts.net";
-                //Student.Rows.Add(row);
+                DataRow row = Student.NewRow();
+                row["Id"] = 101;
+                row["Name"] = "Freetuts";
+                row["Email"] = "Freetuts.net";
+                Student.Rows.Add(row);
 
-                //Student.Rows.Add(102, "Freetuts2", "Freetuts.net2");
-                //Student.Rows.Add(103, "Freetuts3", "Freetuts.net3");
-                //Student.Rows.Add(104, "Freetuts4", "Freetuts.net4");
-                //Student.Rows.Add(105, "Freetuts5", "Freetuts.net5");
+                Student.Rows.Add(102, "Freetuts2", "Freetuts.net2");
+                Student.Rows.Add(103, "Freetuts3", "Freetuts.net3");
+                Student.Rows.Add(104, "Freetuts4", "Freetuts.net4");
+                Student.Rows.Add(105, "Freetuts5", "Freetuts.net5");
 
                 // sửa rows theo ID
                 foreach (DataRow dataRow in Student.Rows)
