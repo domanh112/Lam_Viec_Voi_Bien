@@ -244,8 +244,8 @@ namespace Lam_Viec_Voi_Bien
         {
             try
             {
-                string isClose =null;
-                
+                string isClose = null;
+
                 // khởi tạo DataTable Customer
                 DataTable Customer = new DataTable("Customer");
 
@@ -253,30 +253,39 @@ namespace Lam_Viec_Voi_Bien
                 IdCus.DataType = typeof(int);
                 IdCus.Unique = true;
                 IdCus.AllowDBNull = false;
-                IdCus.Caption = "Student ID";
+                IdCus.Caption = "Customer ID";
                 Customer.Columns.Add(IdCus);
 
                 DataColumn NameCus = new DataColumn("Name");
+                NameCus.DataType = typeof(string);
                 NameCus.MaxLength = 50;
                 NameCus.AllowDBNull = false;
                 Customer.Columns.Add(NameCus);
 
                 DataColumn EmailCus = new DataColumn("Email");
+                EmailCus.DataType = typeof(string);
                 Customer.Columns.Add(EmailCus);
+
+                DataColumn Salary = new DataColumn("Salary");
+                Salary.DataType = typeof(Int32);
+                Customer.Columns.Add(Salary);
 
                 Customer.PrimaryKey = new DataColumn[] { IdCus };
 
                 // Thêm rows
+                //Cách 1:
                 DataRow rowCus = Customer.NewRow();
                 rowCus["Id"] = 101;
-                rowCus["Name"] = "Cus1";
-                rowCus["Email"] = "Cus.net";
+                rowCus["Name"] = "Manh";
+                rowCus["Email"] = "Manhdd@mic.vn1";
+                rowCus["Salary"] = 100000000;
                 Customer.Rows.Add(rowCus);
 
-                Customer.Rows.Add(102, "Cus2", "Cus.net2");
-                Customer.Rows.Add(103, "Cus3", "Cus.net3");
-                Customer.Rows.Add(104, "Cus4", "Cus.net4");
-                Customer.Rows.Add(105, "Cus5", "Cus.net5");
+                //Cách 2:
+                Customer.Rows.Add(102, "Cus2", "Manhdd@mic.vn2", 100000000);
+                Customer.Rows.Add(103, "Cus3", "Manhdd@mic.vn3", 100000000);
+                Customer.Rows.Add(104, "Cus4", "Manhdd@mic.vn4", 100000000);
+                Customer.Rows.Add(105, "Cus5", "Manhdd@mic.vn5", 100000000);
 
 
                 // khởi tạo DataTable Student
@@ -290,14 +299,48 @@ namespace Lam_Viec_Voi_Bien
                 Student.Columns.Add(Id);
 
                 DataColumn Name = new DataColumn("Name");
+                Name.DataType = typeof(string);
                 Name.MaxLength = 50;
                 Name.AllowDBNull = false;
                 Student.Columns.Add(Name);
 
                 DataColumn Email = new DataColumn("Email");
+                Email.DataType = typeof(string);
                 Student.Columns.Add(Email);
 
+                DataColumn SalaryStud = new DataColumn("Salary");
+                SalaryStud.DataType = typeof(Int32);
+                Student.Columns.Add(SalaryStud);
+
                 Student.PrimaryKey = new DataColumn[] { Id };
+
+
+                // khởi tạo DataTable DtCop
+                DataTable DtCop = new DataTable("DtCop");
+
+                DataColumn IdCop = new DataColumn("ID");
+                IdCop.DataType = typeof(int);
+                IdCop.Unique = true;
+                IdCop.AllowDBNull = false;
+                IdCop.Caption = " ID";
+                DtCop.Columns.Add(IdCop);
+
+                DataColumn NameCop = new DataColumn("Name");
+                NameCop.DataType = typeof(string);
+                NameCop.MaxLength = 50;
+                NameCop.AllowDBNull = false;
+                DtCop.Columns.Add(NameCop);
+
+                DataColumn EmailCop = new DataColumn("Email");
+                EmailCop.DataType = typeof(string);
+                DtCop.Columns.Add(EmailCop);
+
+                DataColumn SalaryCop = new DataColumn("Salary");
+                SalaryCop.DataType = typeof(Int32);
+                DtCop.Columns.Add(SalaryCop);
+
+                DtCop.PrimaryKey = new DataColumn[] { IdCop };
+
 
                 // Thêm rows bằng tay
                 //do
@@ -316,27 +359,29 @@ namespace Lam_Viec_Voi_Bien
                 //    rowByHand["Name"] = nameHand;
                 //    rowByHand["Email"] = emailHand;
                 //    Student.Rows.Add(rowByHand);
-
                 //} while (isClose != "  ");
+
 
                 // Thêm rows
                 DataRow row = Student.NewRow();
                 row["Id"] = 101;
-                row["Name"] = "Freetuts";
-                row["Email"] = "Freetuts.net";
+                row["Name"] = "Manhdd";
+                row["Email"] = "Manhdd@mic.vn1";
+                row["Salary"] = 1000000000;
                 Student.Rows.Add(row);
 
-                Student.Rows.Add(102, "Freetuts2", "Freetuts.net2");
-                Student.Rows.Add(103, "Freetuts3", "Freetuts.net3");
-                Student.Rows.Add(104, "Freetuts4", "Freetuts.net4");
-                Student.Rows.Add(105, "Freetuts5", "Freetuts.net5");
+                Student.Rows.Add(102, "Manhdd", "Manhdd@mic.vn2", 1000000000);
+                Student.Rows.Add(103, "Manhdd", "Manhdd@mic.vn3", 1000000000);
+                Student.Rows.Add(104, "Student4", "Manhdd@mic.vn4", 2000000000);
+                Student.Rows.Add(105, "Student5", "Manhdd@mic.vn5", 2000000000);
+                Student.Rows.Add(106, "Manhdd", "Manhdd@mic.vn6", 1000000000);
 
                 // sửa rows theo ID
                 foreach (DataRow dataRow in Student.Rows)
                 {
                     if (dataRow[0].ToString() == "101")
                     {
-                        dataRow[1]= "sbc";
+                        dataRow[1] = "Manhme";
                         break;
                     }
                 }
@@ -352,27 +397,68 @@ namespace Lam_Viec_Voi_Bien
                         break;
                     }
                 }
-
-                // hiển thị giữ liệu trực tiếp qua datatable
+                // Cop dữ liệu từ bảng này sang bảng khác
+                Console.WriteLine("datatable đã chỉnh sửa và lấy Dữ liệu :");
                 foreach (DataRow dataRow in Student.Rows)
                 {
-                    Console.WriteLine(dataRow["Id"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"]);
+                    Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
+                    DtCop.ImportRow(dataRow);
                 }
-                Console.WriteLine("****************************************************************");
+
+                Console.WriteLine("****************************************************************\n");
+
+                // Filter dữ liệu
+                Console.WriteLine(" Filter dữ liệu :");
+                foreach (DataRow dataRow in Student.Rows)
+                {
+                    if (dataRow["Name"].ToString().Contains("Manh"))
+                    {
+                        Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
+                    }
+                }
+                Console.WriteLine("****************************************************************\n");
+
+                // Count dữ liệu (Hàm tính toán)
+                int sum = Convert.ToInt32(Student.Compute("SUM(Salary)", "Name = 'Manhdd'"));
+                Console.WriteLine("Tổng Salary :" + sum);
+                Console.WriteLine("****************************************************************\n");
+
+                // order by dữ liệu 
+                Console.WriteLine("Order by dữ liệu  : ");
+                var sortedRows = Student.AsEnumerable().OrderBy(r => r.Field<Int32>("Salary"));
+                DataTable sortedDt = sortedRows.CopyToDataTable();
+                foreach (DataRow dataRow in sortedDt.Rows)
+                {
+                    Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
+                }
+
+                Console.WriteLine("****************************************************************\n");
+
+                // hiển thị giữ liệu trực tiếp qua datatable
+                Console.WriteLine("datatable Đã Copy Dữ liệu :");
+                foreach (DataRow dataRow in DtCop.Rows)
+                {
+                    Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
+                }
+                Console.WriteLine("****************************************************************\n");
 
                 // thêm các dataTable vào DataSet
                 DataSet ds = new DataSet();
-                ds.Tables.Add(Customer);
+                //ds.Tables.Add(Customer);
                 ds.Tables.Add(Student);
+                ds.Tables.Add(DtCop);
 
+                Console.WriteLine("********* Hiển thị dữ liệu từng Table trong DataSet *********\n");
                 // hiển thị dữ liệu từng Table trong DataSet
-                foreach(DataTable dt in ds.Tables)
+                foreach (DataTable dt in ds.Tables)
                 {
+                    Console.WriteLine(dt.TableName == "Student" ? "dataTable Student" : "dataTable DtCop");
                     foreach (DataRow dataRow in dt.Rows)
                     {
-                        Console.WriteLine(dataRow["Id"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"]);
+                        Console.WriteLine(dataRow["Id"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
+
                     }
-                    Console.WriteLine("****************************************************************");
+                    Console.WriteLine("****************************************************************\n");
                 }
 
             }
