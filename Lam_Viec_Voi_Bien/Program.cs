@@ -24,23 +24,21 @@ namespace Lam_Viec_Voi_Bien
             // độ dài
             Console.WriteLine("số kí tự :" + str1.Length);
 
-            int l = 0;
             // tách từng kí tự của chuỗi 
             Console.WriteLine("tách từng kí tự của chuỗi : ");
-            while (l <= str1.Length - 1)
+            int l = 0;
+            while (l < str1.Length)
             {
-                Console.Write("{0} ", str1[l]);
+                Console.Write("tách từng kí tự của chuỗi : {0}", str1[l]);
                 l++;
             }
             Console.WriteLine("\n");
 
             // in các ký tự riêng lẻ của chuỗi theo chiều đảo ngược
             l = str1.Length - 1;
-
-            Console.WriteLine("in các ký tự riêng lẻ của chuỗi theo chiều đảo ngược : ");
             while (l >= 0)
             {
-                Console.Write("{0} ", str1[l]);
+                Console.Write("in các ký tự riêng lẻ của chuỗi theo chiều đảo ngược : {0}", str1[l]);
                 l--;
             }
             Console.WriteLine("\n");
@@ -49,10 +47,11 @@ namespace Lam_Viec_Voi_Bien
             string strNoSpace = str1.Replace(" ", "");
             Console.WriteLine("Số chữ trong chuỗi :" + strNoSpace.Length);
 
+
             Console.Write("nhập vào chuỗi 2 : ");
             string str2 = Console.ReadLine();
 
-            // Thao tác với mảng String
+            // Array String
             string[] lstStr = { str1, str2 };
             int chu_thuong, chu_hoa, chu_so, ky_tu_dac_biet, i;
             chu_hoa = chu_thuong = chu_so = ky_tu_dac_biet = i = 0;
@@ -91,7 +90,7 @@ namespace Lam_Viec_Voi_Bien
             {
                 Console.WriteLine(" độ dài = nhau \n");
 
-                //tìm kiếm kí tự trùng giữa 2 chuỗi
+                // so sánh kí tự 2 chuỗi
                 if (String.Compare(str1, str2) == 0)
                     Console.WriteLine("trùng lặp");
                 else Console.WriteLine("ko trùng lặp");
@@ -249,7 +248,7 @@ namespace Lam_Viec_Voi_Bien
                 // khởi tạo DataTable Customer
                 DataTable Customer = new DataTable("Customer");
 
-                DataColumn IdCus = new DataColumn("Id");
+                DataColumn IdCus = new DataColumn("ID");
                 IdCus.DataType = typeof(int);
                 IdCus.Unique = true;
                 IdCus.AllowDBNull = false;
@@ -350,7 +349,7 @@ namespace Lam_Viec_Voi_Bien
                 // Thêm rows Customer
                 //Cách 1:
                 DataRow rowCus = Customer.NewRow();
-                rowCus["Id"] = 101;
+                rowCus["ID"] = 101;
                 rowCus["Name"] = "Manh";
                 rowCus["Email"] = "Manhdd@mic.vn1";
                 rowCus["Salary"] = 100000000;
@@ -364,7 +363,7 @@ namespace Lam_Viec_Voi_Bien
 
                 // Thêm rows Student
                 DataRow row = Student.NewRow();
-                row["Id"] = 101;
+                row["ID"] = 101;
                 row["Name"] = "Manhdd";
                 row["Email"] = "Manhdd@mic.vn1";
                 row["Salary"] = 1000000000;
@@ -382,6 +381,7 @@ namespace Lam_Viec_Voi_Bien
                     if (dataRow[0].ToString() == "101")
                     {
                         dataRow[1] = "Manhme";
+
                         break;
                     }
                 }
@@ -393,21 +393,27 @@ namespace Lam_Viec_Voi_Bien
                     {
                         Student.Rows.Remove(dataRow);
                         Student.AcceptChanges();
+
                         break;
                     }
                 }
 
                 // Cop dữ liệu từ bảng này sang bảng khác
                 Console.WriteLine("datatable đã chỉnh sửa và lấy Dữ liệu :");
+                Console.WriteLine("ID" + "  ||" + "Name" + "   ||" + "Email" + "          ||" + "Salary");
+
                 foreach (DataRow dataRow in Student.Rows)
                 {
                     Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
                     DtCop.ImportRow(dataRow);
                 }
+
                 Console.WriteLine("****************************************************************\n");
 
                 // Filter dữ liệu
                 Console.WriteLine(" Filter dữ liệu :");
+                Console.WriteLine("ID" + "  ||" + "Name" + "   ||" + "Email" + "          ||" + "Salary");
+
                 foreach (DataRow dataRow in Student.Rows)
                 {
                     if (dataRow["Name"].ToString().Contains("Manh"))
@@ -419,13 +425,18 @@ namespace Lam_Viec_Voi_Bien
 
                 // Count dữ liệu (Hàm tính toán)
                 int sum = Convert.ToInt32(Student.Compute("SUM(Salary)", "Name = 'Manhdd'"));
+
                 Console.WriteLine("Tổng Salary :" + sum);
                 Console.WriteLine("****************************************************************\n");
 
                 // Order by dữ liệu 
                 Console.WriteLine("Order by dữ liệu  : ");
+
                 var sortedRows = Student.AsEnumerable().OrderBy(r => r.Field<Int32>("Salary"));
                 DataTable sortedDt = sortedRows.CopyToDataTable();
+
+                Console.WriteLine("ID" + "  ||" + "Name" + "   ||" + "Email" + "          ||" + "Salary");
+
                 foreach (DataRow dataRow in sortedDt.Rows)
                 {
                     Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
@@ -434,6 +445,8 @@ namespace Lam_Viec_Voi_Bien
 
                 // hiển thị giữ liệu trực tiếp qua datatable
                 Console.WriteLine("datatable Đã Copy Dữ liệu :");
+                Console.WriteLine("ID" + "  ||" + "Name" + "   ||" + "Email" + "          ||" + "Salary");
+
                 foreach (DataRow dataRow in DtCop.Rows)
                 {
                     Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
@@ -451,6 +464,8 @@ namespace Lam_Viec_Voi_Bien
                 foreach (DataTable dt in ds.Tables)
                 {
                     Console.WriteLine(dt.TableName == "Student" ? "dataTable Student" : "dataTable DtCop");
+                    Console.WriteLine("ID" + "  ||" + "Name" + "   ||" + "Email" + "          ||" + "Salary");
+
                     foreach (DataRow dataRow in dt.Rows)
                     {
                         Console.WriteLine(dataRow["Id"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
