@@ -1,6 +1,7 @@
 ﻿using ConsoleTables;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -19,46 +20,6 @@ namespace Lam_Viec_Voi_Bien
                 string isClose = null;
 
                 // khởi tạo DataTable Customer
-                DataTable Customer = new DataTable("Customer");
-
-                DataColumn IdCus = new DataColumn("Id");
-                IdCus.DataType = typeof(int);
-                IdCus.Unique = true;
-                IdCus.AllowDBNull = false;
-                IdCus.Caption = "Customer ID";
-                Customer.Columns.Add(IdCus);
-
-                DataColumn NameCus = new DataColumn("Name");
-                NameCus.DataType = typeof(string);
-                NameCus.MaxLength = 50;
-                NameCus.AllowDBNull = false;
-                Customer.Columns.Add(NameCus);
-
-                DataColumn EmailCus = new DataColumn("Email");
-                EmailCus.DataType = typeof(string);
-                Customer.Columns.Add(EmailCus);
-
-                DataColumn Salary = new DataColumn("Salary");
-                Salary.DataType = typeof(Int32);
-                Customer.Columns.Add(Salary);
-
-                Customer.PrimaryKey = new DataColumn[] { IdCus };
-
-                // Thêm rows
-                //Cách 1:
-                DataRow rowCus = Customer.NewRow();
-                rowCus["Id"] = 101;
-                rowCus["Name"] = "Manh";
-                rowCus["Email"] = "Manhdd@mic.vn1";
-                rowCus["Salary"] = 100000000;
-                Customer.Rows.Add(rowCus);
-
-                //Cách 2:
-                Customer.Rows.Add(102, "Cus2", "Manhdd@mic.vn2", 100000000);
-                Customer.Rows.Add(103, "Cus3", "Manhdd@mic.vn3", 100000000);
-                Customer.Rows.Add(104, "Cus4", "Manhdd@mic.vn4", 100000000);
-                Customer.Rows.Add(105, "Cus5", "Manhdd@mic.vn5", 100000000);
-
 
                 // khởi tạo DataTable Student
                 DataTable Student = new DataTable("Student");
@@ -149,17 +110,6 @@ namespace Lam_Viec_Voi_Bien
 
                 Console.WriteLine("****************************************************************\n");
 
-                // Filter dữ liệu
-                Console.WriteLine(" Filter dữ liệu :");
-                foreach (DataRow dataRow in Student.Rows)
-                {
-                    if (dataRow["Name"].ToString().Contains("Manh"))
-                    {
-                        Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
-                    }
-                }
-                Console.WriteLine("****************************************************************\n");
-
                 // Count dữ liệu (Hàm tính toán)
                 int sum = Convert.ToInt32(Student.Compute("SUM(Salary)", "Name = 'Manhdd'"));
                 Console.WriteLine("Tổng Salary :" + sum);
@@ -174,14 +124,6 @@ namespace Lam_Viec_Voi_Bien
                     Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
                 }
 
-                Console.WriteLine("****************************************************************\n");
-
-                // hiển thị giữ liệu trực tiếp qua datatable
-                Console.WriteLine("datatable Đã Copy Dữ liệu :");
-                foreach (DataRow dataRow in DtCop.Rows)
-                {
-                    Console.WriteLine(dataRow["ID"] + ",  " + dataRow["Name"] + ",  " + dataRow["Email"] + ",  " + dataRow["Salary"]);
-                }
                 Console.WriteLine("****************************************************************\n");
 
                 // thêm các dataTable vào DataSet
@@ -211,80 +153,89 @@ namespace Lam_Viec_Voi_Bien
 
         }
 
-        public static DataTable CreateDataTable(string nameTable, string[] nameColumns)
+        // Tạo bảng mới
+        public static DataTable CreateDataTable(string nameTable, string[] nameColumns,Type[] types)
         {
             DataTable dataTable = new DataTable(@nameTable);
-
-            foreach (string namCol in nameColumns)
+            // lấy tên cột và kiểu dữ liệu tương ứng đã khai báo để thêm vào dataTable
+            for (int i = 0; i < nameColumns.Length;)
             {
-                dataTable.Columns.Add(namCol);
-            }
-            dataTable.Rows.Add(102, "Cus2", "Manhdd@mic.vn2", 100000000);
-            dataTable.Rows.Add(103, "Cus3", "Manhdd@mic.vn3", 100000000);
-            dataTable.Rows.Add(104, "Cus4", "Manhdd@mic.vn4", 100000000);
-            dataTable.Rows.Add(105, "Cus5", "Manhdd@mic.vn5", 100000000);
+                for (int j = i; j < types.Length;)
+                {
+                    string namCol = nameColumns[i].ToString();
+                    Type type = types[j];
+                    dataTable.Columns.Add(namCol, type);
+                    break;
+                }
+                i++;
+            }    
+            return dataTable;
+        }
 
-            DataRow[] rows = dataTable.Select();
+        // Hiển thị dữ liệu 
+        public static void SelectDataTable(DataTable dataTable)
+        {
+            string filterData = @"Id<105";
+            // khai báo 1 mảng row để nhận những row thỏa mãn Filter
+            DataRow[] rows = dataTable.Select(filterData);
 
-            //string[] columnNames = dataTable.Columns.Cast<DataColumn>()
-            //                   .Select(x => x.ColumnName)
-            //                   .ToArray();
-            //string[] columnNames = new string[nameColumns.Length];
-            //// Hiển thị dữ liệu đã được lọc ra
-            //for (int i = 0; i < columnNames.Length; i++)
-            //{
-            //    foreach (string nameCol in nameColumns)
-            //    {
-            //        string[] changName = nameCol.Split(',');
+            // lấy ra 1 mảng chứa tên các cột trong dataTable để truyền vào bảng select
+            string[] columnNames = dataTable.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
+            var table = new ConsoleTable(columnNames);
 
-            //        if (columnNames[i] != changName[0])
-            //        {
-            //            columnNames[i] = changName[0];
-            //            break;
-            //        }
-            //    }
-            //}
-            var table = new ConsoleTable(nameColumns);
+            // lấy dữ liệu từng row trong mảng row để thêm vào bảng select
             foreach (DataRow row in rows)
             {
                 table.AddRow(row.ItemArray);
             }
             table.Write(Format.MarkDown);
             Console.Read();
-
-            return dataTable;
         }
 
-        public static void DeleteDataRowById(DataTable dataTable, int rowID)
+        // xóa theo rows ID
+        public static void DeleteRowById(DataTable dataTable, int rowID)
         {
-            // xóa theo rows ID
             foreach (DataRow dataRow in dataTable.Rows)
             {
-                if (dataRow[0].ToString() == rowID.ToString())
+                if (dataRow["Id"].ToString() == rowID.ToString())
                 {
+                    // Xóa row chứa ID khỏi bảng
                     dataTable.Rows.Remove(dataRow);
                     dataTable.AcceptChanges();
-                    Console.WriteLine("success!!!");
-                    DataRow[] rows = dataTable.Select();
+                    Console.WriteLine("Xóa thành công !!!");
 
-                    string[] columnNames = dataTable.Columns.Cast<DataColumn>()
-                                       .Select(x => x.ColumnName)
-                                       .ToArray();
-
-                    // Hiển thị dữ liệu đã được lọc ra
-                    var table = new ConsoleTable(columnNames);
-                    foreach (DataRow row in rows)
-                    {
-                        table.AddRow(row.ItemArray);
-                    }
-                    table.Write(Format.MarkDown);
-                    Console.Read();
-
+                    // Hiển thị dữ liệu sau khi đã xóa
+                    SelectDataTable(dataTable);
                     break;
                 }
             }
         }
 
+        // Sửa dữ liệu theo rowID
+        public static void EditRowById(DataTable dataTable, int rowID)
+        {
+            foreach (DataRow dataRow in dataTable.Rows)
+            {
+                // sửa dữ liệu row theo ID và tên cột muốn sửa
+                if (dataRow["Id"].ToString() == rowID.ToString())
+                {
+                    dataRow["Name"] = "Manhdd";
+                    dataTable.AcceptChanges();
+                    Console.WriteLine("Sửa thành công !!!");
+
+                    // Hiển thị dữ liệu sau khi đã sửa
+                    SelectDataTable(dataTable);
+                    break;
+                }
+            }
+        }
+
+
+        // Import dữ liệu vào bảng
+        public static void ImportData(DataTable dataTable)
+        {
+
+        }
 
     }
 }
