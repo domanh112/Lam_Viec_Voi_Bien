@@ -11,14 +11,17 @@ namespace Lam_Viec_Voi_Bien
 {
     internal class Case_Json
     {
-        public static void AddJson(Object obj,string path) 
+        public static string AddJson(List<Employee> lstEmp,string path) 
         { 
-            string JSONresult = JsonConvert.SerializeObject(obj);
+            string JSONresult = JsonConvert.SerializeObject(lstEmp, Formatting.Indented);
+            //Employee deseri   alizedProduct = JsonConvert.DeserializeObject<Employee>(JSONresult);
+
             if (File.Exists(path))
             {
                 File.Delete(path);
                 using (var tw = new StreamWriter(path, true))
                 {
+                    tw.WriteLine("Employee :");
                     tw.WriteLine(JSONresult.ToString());
                     tw.Close();
                 }
@@ -26,11 +29,13 @@ namespace Lam_Viec_Voi_Bien
             {
                 using (var tw = new StreamWriter(path, true))
                 {
+                    tw.WriteLine("Employee :");
                     tw.WriteLine(JSONresult.ToString());
                     tw.Close();
                 }
             }
             Console.WriteLine("Insert Success !!! \n"+JSONresult);
+            return JSONresult;
         }
 
         private static string AddSquareBrackets(string json)

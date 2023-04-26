@@ -1,4 +1,5 @@
 ﻿using ConsoleTables;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -173,9 +174,8 @@ namespace Lam_Viec_Voi_Bien
         }
 
         // Hiển thị dữ liệu 
-        public static void SelectDataTable(DataTable dataTable)
+        public static void SelectDataTable(DataTable dataTable, string filterData)
         {
-            string filterData = @"Id<105";
             // khai báo 1 mảng row để nhận những row thỏa mãn Filter
             DataRow[] rows = dataTable.Select(filterData);
 
@@ -195,6 +195,7 @@ namespace Lam_Viec_Voi_Bien
         // xóa theo rows ID
         public static void DeleteRowById(DataTable dataTable, int rowID)
         {
+            string filterData ="";
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 if (dataRow["Id"].ToString() == rowID.ToString())
@@ -205,7 +206,7 @@ namespace Lam_Viec_Voi_Bien
                     Console.WriteLine("Xóa thành công !!!");
 
                     // Hiển thị dữ liệu sau khi đã xóa
-                    SelectDataTable(dataTable);
+                    SelectDataTable(dataTable,filterData);
                     break;
                 }
             }
@@ -214,6 +215,7 @@ namespace Lam_Viec_Voi_Bien
         // Sửa dữ liệu theo rowID
         public static void EditRowById(DataTable dataTable, int rowID)
         {
+            string filterData = "";
             foreach (DataRow dataRow in dataTable.Rows)
             {
                 // sửa dữ liệu row theo ID và tên cột muốn sửa
@@ -224,7 +226,7 @@ namespace Lam_Viec_Voi_Bien
                     Console.WriteLine("Sửa thành công !!!");
 
                     // Hiển thị dữ liệu sau khi đã sửa
-                    SelectDataTable(dataTable);
+                    SelectDataTable(dataTable, filterData);
                     break;
                 }
             }
@@ -232,10 +234,15 @@ namespace Lam_Viec_Voi_Bien
 
 
         // Import dữ liệu vào bảng
-        public static void ImportData(DataTable dataTable)
+        public static void ImportData(DataTable dataTable,string path)
         {
-
+            string filterData = "";
+            using (StreamReader r = new StreamReader(path))
+            {
+                string json = r.ReadToEnd();
+                dataTable = (DataTable)JsonConvert.DeserializeObject(json, (typeof(DataTable)));
+                SelectDataTable(dataTable, filterData);
+            }
         }
-
     }
 }
