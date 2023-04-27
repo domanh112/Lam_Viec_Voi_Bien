@@ -22,15 +22,17 @@ namespace Lam_Viec_Voi_Bien
             ////Sử dụng Number
             //Case_Number.Test_Number();
 
-            //// Sử dụng String
-            //Case_String.Test_String();
+            // Sử dụng String
+            string str1 = @"abcdef,fedcba";
+            string str2 = @"abcâôê";
+            Case_String.Test_String(str1,str2);
 
             //// Sử Dụng DataTable-DataSet
             //// Tạo Bảng 
-            string nameTable = "TestHamKhoiTao";
-            string[] nameColumns = { "Id", "Name", "Email", "Salary" };
-            Type[] type = { typeof(int), typeof(string), typeof(string), typeof(decimal) };
-            DataTable TestHamKhoiTao = Case_Data.CreateDataTable(nameTable, nameColumns, type);
+            //string nameTable = "TestHamKhoiTao";
+            //string[] nameColumns = { "Id", "Name", "Email", "Salary" };
+            //Type[] type = { typeof(int), typeof(string), typeof(string), typeof(decimal) };
+            //DataTable TestHamKhoiTao = Case_Data.CreateDataTable(nameTable, nameColumns, type);
 
             //// Thêm dữ liệu 
             //TestHamKhoiTao.Rows.Add(101, "Cus1", "Manhdd@mic.vn1", 100000000);
@@ -50,9 +52,10 @@ namespace Lam_Viec_Voi_Bien
 
             //// Xóa Dữ liệu theo rowID
             //Case_Data.DeleteRowById(TestHamKhoiTao, rowID);
-            string path = @"C:\Users\Admin\source\repos\domanh112\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
 
-            Case_Data.ImportData(TestHamKhoiTao,path);
+            //// Import Dữ liệu từ Json sang DataTable
+            //string path = @"C:\Users\Admin\source\repos\domanh112\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
+            //Case_Data.ImportData(TestHamKhoiTao,path);
 
             //// Sử Dụng Json
             //string path = @"C:\Users\Admin\source\repos\domanh112\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
@@ -73,9 +76,10 @@ namespace Lam_Viec_Voi_Bien
             //list.Add(employee2);
             //string resultJson = Case_Json.AddJson(list, path);
 
+            //// Đưa dữ liệu vào dataTable để hiển thị theo dạng bảng
             //DataTable dt = (DataTable)JsonConvert.DeserializeObject(resultJson, (typeof(DataTable)));
 
-            //DataRow[] rows = dt.Select();
+            //DataRoTw[] rows = dt.Select();
 
             //// lấy ra 1 mảng chứa tên các cột trong dataTable để truyền vào bảng select
             //string[] columnNames = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();

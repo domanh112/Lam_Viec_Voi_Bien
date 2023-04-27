@@ -8,13 +8,11 @@ namespace Lam_Viec_Voi_Bien
 {
     internal class Case_String
     {
-        public static void Test_String()
+        public static void Test_String(string str1,string str2)
         {
-
-            string str1 = @"abcdef,fedcba";
-
             // độ dài
-            Console.WriteLine("số kí tự :" + str1.Length);
+            Console.WriteLine("số kí tự chuỗi 1 :" + str1.Length);
+            Console.WriteLine("số kí tự chuỗi 2 :" + str2.Length);
 
             // cắt chuỗi trc dấu phẩy
             Console.WriteLine("căt chuỗi : {0}" ,str1.Split(','));
@@ -44,7 +42,43 @@ namespace Lam_Viec_Voi_Bien
             string strNoSpace = str1.Replace(" ", "");
             Console.WriteLine("Số chữ trong chuỗi :" + strNoSpace.Length);
 
-            string str2 = @"abc";
+            // Cộng chuỗi
+            Console.WriteLine("2 chuỗi cộng lại : {0}\n", (str1 + str2));
+            // Hoặc 
+            Console.WriteLine("2 chuỗi cộng lại : " + String.Concat(str1, str2));
+
+            // so sánh độ dài 2 chuỗi
+            if (str1.Length == str2.Length)
+            {
+                Console.WriteLine(" độ dài = nhau \n");
+
+                //tìm kiếm kí tự trùng giữa 2 chuỗi
+                if (String.Compare(str1, str2) == 0)
+                    Console.WriteLine("trùng lặp");
+                else Console.WriteLine("ko trùng lặp");
+            }
+            else Console.WriteLine(" độ dài != nhau");
+
+            // cắt chuỗi
+            Console.WriteLine("Chuỗi đã cắt : " + str1.Substring(0, str1.Length - 2));
+
+            // kiểm tra chuỗi 2 có là chuỗi con của chuỗi 1 ko
+            if (str1.Contains(str2))
+                Console.WriteLine("{0} là chuỗi con " + "của chuỗi {1}", str2, str1);
+            else
+                Console.WriteLine("{0} ko là chuỗi con " + "của chuỗi {1}", str2, str1);
+
+            //thay thế chuỗi con vào 1 khoảng chuỗi cha
+            if (str1.Contains("abc"))
+            {
+                string strThay = str1.Replace("abc", str2);
+
+                // thay thế 2 kí tự cuối 
+                string strChon = str1.Substring(str1.Length - 2, 2);
+                string strThay2 = str1.Replace(strChon, str2);
+                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay);
+                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay2);
+            }
 
             // Thao tác với mảng String
             string[] lstStr = { str1, str2 };
@@ -73,24 +107,8 @@ namespace Lam_Viec_Voi_Bien
                 Console.WriteLine("số chữ hoa : {0}\n", chu_hoa);
                 Console.WriteLine("số chữ số : {0}\n", chu_so);
                 Console.WriteLine("số kí tự đặc biệt : {0}\n", ky_tu_dac_biet);
+                i = 0;
             }
-
-            // Cộng chuỗi
-            Console.WriteLine("2 chuỗi cộng lại : {0}\n", (str1 + str2));
-            // Hoặc 
-            Console.WriteLine("2 chuỗi cộng lại : " + String.Concat(str1, str2));
-
-            // so sánh độ dài 2 chuỗi
-            if (str1.Length == str2.Length)
-            {
-                Console.WriteLine(" độ dài = nhau \n");
-
-                //tìm kiếm kí tự trùng giữa 2 chuỗi
-                if (String.Compare(str1, str2) == 0)
-                    Console.WriteLine("trùng lặp");
-                else Console.WriteLine("ko trùng lặp");
-            }
-            else Console.WriteLine(" độ dài != nhau");
 
             //Sao chép chuỗi
             string[] strCop = new string[str1.Length];
@@ -104,26 +122,6 @@ namespace Lam_Viec_Voi_Bien
             Console.Write("\nIn chuoi ban dau: {0}\n", str1);
             Console.WriteLine(" chuỗi đã cop : {0}\n ", string.Join("", strCop));
 
-            // cắt chuỗi
-            Console.WriteLine("Chuỗi đã cắt : " + str1.Substring(0, str1.Length - 2));
-
-            // kiểm tra chuỗi 2 có là chuỗi con của chuỗi 1 ko
-            if (str1.Contains(str2))
-                Console.WriteLine("{0} là chuỗi con " + "của chuỗi {1}", str2, str1);
-            else
-                Console.WriteLine("{0} ko là chuỗi con " + "của chuỗi {1}", str2, str1);
-
-            //thay thế chuỗi con vào 1 khoảng chuỗi cha
-            if (str1.Contains("abc"))
-            {
-                string strThay = str1.Replace("abc", str2);
-
-                // thay thế 2 kí tự cuối 
-                string strChon = str1.Substring(str1.Length - 2, 2);
-                string strThay2 = str1.Replace(strChon, str2);
-                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay);
-                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay2);
-            }
         }
 
     }

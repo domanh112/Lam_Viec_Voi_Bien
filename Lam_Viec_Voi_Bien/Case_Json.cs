@@ -21,7 +21,7 @@ namespace Lam_Viec_Voi_Bien
                 File.Delete(path);
                 using (var tw = new StreamWriter(path, true))
                 {
-                    tw.WriteLine("Employee :");
+                    //tw.WriteLine("Employee :");
                     tw.WriteLine(JSONresult.ToString());
                     tw.Close();
                 }
@@ -29,7 +29,7 @@ namespace Lam_Viec_Voi_Bien
             {
                 using (var tw = new StreamWriter(path, true))
                 {
-                    tw.WriteLine("Employee :");
+                    //tw.WriteLine("Employee :");
                     tw.WriteLine(JSONresult.ToString());
                     tw.Close();
                 }
