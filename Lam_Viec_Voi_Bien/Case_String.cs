@@ -88,15 +88,16 @@ namespace Lam_Viec_Voi_Bien
             // đếm số chữ cái, số chữ số, số ký tự đặc biệt trong 2 chuỗi
             foreach (string a in lstStr)
             {
-                while (i < a.Length)
+                string b = RemoveSign4VietnameseString(a);
+                while (i < b.Length)
                 {
-                    if ((a[i] >= 'A' && a[i] <= 'Z'))
+                    if ((b[i] >= 'A' && b[i] <= 'Z'))
                         chu_hoa++;
 
-                    if (a[i] >= 'a' && a[i] <= 'z')
+                    if (b[i] >= 'a' && b[i] <= 'z')
                         chu_thuong++;
 
-                    else if (a[i] >= '0' && a[i] <= '9')
+                    else if (b[i] >= '0' && b[i] <= '9')
                         chu_so++;
 
                     else ky_tu_dac_biet++;
@@ -124,5 +125,35 @@ namespace Lam_Viec_Voi_Bien
 
         }
 
+        private static readonly string[] VietnameseSigns = new string[]
+  {
+        "aAeEoOuUiIdDyY",
+        "áàạảãâấầậẩẫăắằặẳẵ",
+        "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+        "éèẹẻẽêếềệểễ",
+        "ÉÈẸẺẼÊẾỀỆỂỄ",
+        "óòọỏõôốồộổỗơớờợởỡ",
+        "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+        "úùụủũưứừựửữ",
+        "ÚÙỤỦŨƯỨỪỰỬỮ",
+        "íìịỉĩ",
+        "ÍÌỊỈĨ",
+        "đ",
+        "Đ",
+        "ýỳỵỷỹ",
+        "ÝỲỴỶỸ"
+  };
+
+        // Hàm chuyển đổi tiếng việt có dấu sang ko dấu
+        public static string RemoveSign4VietnameseString(string str)
+        {
+            //Tiến hành thay thế , lọc bỏ dấu cho chuỗi
+            for (int i = 1; i < VietnameseSigns.Length; i++)
+            {
+                for (int j = 0; j < VietnameseSigns[i].Length; j++)
+                    str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
+            }
+            return str;
+        }
     }
 }
