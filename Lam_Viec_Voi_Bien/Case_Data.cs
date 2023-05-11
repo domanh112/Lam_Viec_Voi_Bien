@@ -174,8 +174,9 @@ namespace Lam_Viec_Voi_Bien
         }
 
         // Hiển thị dữ liệu 
-        public static void SelectDataTable(DataTable dataTable, string filterData)
+        public static void SelectDataTable(DataTable dataTable, string filterData ,string nameTable)
         {
+            Console.WriteLine("Bảng {0}", @nameTable);
             // khai báo 1 mảng row để nhận những row thỏa mãn Filter
             DataRow[] rows = dataTable.Select(filterData);
 
@@ -193,7 +194,7 @@ namespace Lam_Viec_Voi_Bien
         }
 
         // xóa theo rows ID
-        public static void DeleteRowById(DataTable dataTable, int rowID)
+        public static void DeleteRowById(DataTable dataTable, int rowID, string nameTable)
         {
             string filterData ="";
             foreach (DataRow dataRow in dataTable.Rows)
@@ -203,17 +204,18 @@ namespace Lam_Viec_Voi_Bien
                     // Xóa row chứa ID khỏi bảng
                     dataTable.Rows.Remove(dataRow);
                     dataTable.AcceptChanges();
-                    Console.WriteLine("Xóa thành công !!!");
+                    Console.WriteLine("Xóa dữ liệu thành công !!!\n");
+                    Console.Read();
 
                     // Hiển thị dữ liệu sau khi đã xóa
-                    SelectDataTable(dataTable,filterData);
+                    SelectDataTable(dataTable,filterData, nameTable);
                     break;
                 }
             }
         }
 
         // Sửa dữ liệu theo rowID
-        public static void EditRowById(DataTable dataTable, int rowID)
+        public static void EditRowById(DataTable dataTable, int rowID, string nameTable)
         {
             string filterData = "";
             foreach (DataRow dataRow in dataTable.Rows)
@@ -223,10 +225,11 @@ namespace Lam_Viec_Voi_Bien
                 {
                     dataRow["Name"] = "Manhdd";
                     dataTable.AcceptChanges();
-                    Console.WriteLine("Sửa thành công !!!");
+                    Console.WriteLine("Sửa dữ liệu thành công !!!\n");
+                    Console.Read();
 
                     // Hiển thị dữ liệu sau khi đã sửa
-                    SelectDataTable(dataTable, filterData);
+                    SelectDataTable(dataTable, filterData, nameTable);
                     break;
                 }
             }
@@ -234,15 +237,27 @@ namespace Lam_Viec_Voi_Bien
 
 
         // Import dữ liệu vào bảng
-        public static void ImportData(DataTable dataTable,string path)
+        public static void ImportData(DataTable dataTable,string path, string nameTable)
         {
             string filterData = "";
             using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
                 dataTable = (DataTable)JsonConvert.DeserializeObject(json, (typeof(DataTable)));
-                SelectDataTable(dataTable, filterData);
+                Console.WriteLine("Import dữ liệu thành công !!!\n");
+                Console.Read();
+
+                SelectDataTable(dataTable, filterData, nameTable);
             }
         }
+
+        // Count dữ liệu (Hàm tính toán)
+        public static void CountData(DataTable dataTable, string nameTable)
+        {
+            int sum = Convert.ToInt32(dataTable.Compute("SUM(Salary)", "Name = 'Cus2'"));
+            Console.WriteLine("Tổng Salary của bảng {1} : {0}", sum,nameTable);
+
+        }
+
     }
 }

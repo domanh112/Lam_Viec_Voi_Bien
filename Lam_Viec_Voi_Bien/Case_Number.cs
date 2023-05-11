@@ -8,62 +8,65 @@ namespace Lam_Viec_Voi_Bien
 {
     internal class Case_Number
     {
-        public static void Test_Number()
+        public static void Test_Number(int n1, int n2, double n3)
         {
-            int a, b;
-            a = b = 0;
-            double c = 0;
-            bool inputFinish = false;
-            do
-            {
-                try
-                {
-                    Console.Write("nhập vào tham số a : ");
-                    a = Convert.ToInt32(Console.ReadLine());
-
-                    Console.Write("nhập vào tham số b : ");
-                    b = Convert.ToInt32(Console.ReadLine());
-
-                    Console.Write("nhập vào tham số c (theo định dạng 00,00) : ");
-                    c = Convert.ToDouble(Console.ReadLine());
-
-                    inputFinish = true;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            } while (inputFinish != true);
-
             //làm tròn số
-            Console.WriteLine("số c được là tròn thành : {0} \n", Math.Round(c, 2));
+            Console.WriteLine("số c được là tròn thành : {0} \n", Math.Round(n3, 2));
 
             // Tính tổng
-            int sumInt = a + b;
-            Console.WriteLine("tổng 2 số a và b : {0} \n", sumInt);
+            int sumInt = n1 + n2;
+            Console.WriteLine("tổng 2 số n1 và n2 : {0} \n", sumInt);
 
-            // Ép kiểu
-            int sumDouble = a + b + (int)c;
-            Console.WriteLine("tổng 3 số a , b và c : {0} \n", sumDouble);
+            // Tính tổng
+            double tong = (double)n1 + (double)n2 + n3;
+            Console.WriteLine("tổng 3 số n1 , n2 và n3 : {0} \n", Math.Round(tong, 2));
+
+            // Phép nhân và Ép kiểu
+            double nhan = (double)n1 * (double)n2 * n3;
+            Console.WriteLine("tích 3 số n1 , n2 và n3 : {0} \n", Math.Round(nhan, 2));
+
+            // Phép chia và Ép kiểu
+            double chia = (double)n1 / n3;
+            Console.WriteLine("chia số n1 cho n3 : {0} \n", Math.Round(chia, 2));
+            
+            // Phép chia lấy dư
+            int chiaLayDu = n2%n1;
+            Console.WriteLine("chia số n2 cho n1 dư : {0} \n", chiaLayDu);
 
             //So sánh 2 số
-            if (a > b) Console.WriteLine("a>b");
-            else if (b > a) Console.WriteLine("a<b");
-            else Console.WriteLine("a=b");
+            if (n1 > n2) Console.WriteLine("n1 > n2");
+            else if (n2 > n1) Console.WriteLine("n1 < n2");
+            else Console.WriteLine("n1 = n2");
 
             //tìm số lớn nhất||nhỏ nhất 
-            double[] d = { a, b, c };
+            double[] arr = { n1, n2, n3 };
 
-            double max = d[0];
-            double min = d[0];
-            for (int i = 0; i < d.Length; i++)
+            double max = arr[0];
+            double min = arr[0];
+            for (int i = 0; i < arr.Length; i++)
             {
-                if (max < d[i]) max = d[i];
-                if (min > d[i]) min = d[i];
+                if (max < arr[i]) max = arr[i];
+
+                if (min > arr[i]) min = arr[i];
             }
-            Console.WriteLine("mảng số : {0}", d);
-            Console.WriteLine("số lớn nhất là : {0}", max);
-            Console.WriteLine("số nhỏ nhất là : {0}", min);
+            Console.WriteLine("mảng số : {0} , {1} , {2}\n", arr[0], arr[1], arr[2]);
+            Console.WriteLine("số lớn nhất là : {0}\n", max);
+            Console.WriteLine("số nhỏ nhất là : {0}\n", min);
+
+            // Kiểm tra số chẵn lẻ
+            Console.Write("Số chẵn là :");
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] % 2 == 0) Console.Write(arr[i]);
+            }
+
+            Console.WriteLine("\n");
+            Console.Write("Số lẻ là :");
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] % 2 != 0) Console.Write(arr[i] + " ; ");
+            }
+            Console.WriteLine("\n");
         }
     }
 }

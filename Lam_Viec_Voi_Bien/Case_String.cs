@@ -10,12 +10,19 @@ namespace Lam_Viec_Voi_Bien
     {
         public static void Test_String(string str1,string str2)
         {
+            // Viết hoa tất cả
+            Console.WriteLine("chuỗi sau khi viết hoa tất cả : {0}", str1.ToUpper());
+
+            // Viết thường tất cả
+            Console.WriteLine("chuỗi sau khi viết thường tất cả : {0}", str1.ToLower());
+
             // độ dài
             Console.WriteLine("số kí tự chuỗi 1 :" + str1.Length);
-            Console.WriteLine("số kí tự chuỗi 2 :" + str2.Length);
 
-            // cắt chuỗi trc dấu phẩy
-            Console.WriteLine("căt chuỗi : {0}" ,str1.Split(','));
+            // bỏ khoảng trắng
+            Console.WriteLine("chuỗi sau khi bỏ khoảng trắng 2 đầu : {0}\n" ,str1.Trim());
+            Console.WriteLine("chuỗi sau khi bỏ khoảng trắng bên trái : {0}\n" ,str1.TrimStart());
+            Console.WriteLine("chuỗi sau khi bỏ khoảng trắng bên phải : {0}\n", str1.TrimEnd());
 
             int l = 0;
             // tách từng kí tự của chuỗi 
@@ -54,20 +61,25 @@ namespace Lam_Viec_Voi_Bien
 
                 //tìm kiếm kí tự trùng giữa 2 chuỗi
                 if (String.Compare(str1, str2) == 0)
-                    Console.WriteLine("trùng lặp");
-                else Console.WriteLine("ko trùng lặp");
+                    Console.WriteLine("trùng lặp\n");
+                else Console.WriteLine("ko trùng lặp\n");
             }
-            else Console.WriteLine(" độ dài != nhau");
+            else Console.WriteLine(" độ dài != nhau\n");
 
             // cắt chuỗi
             Console.WriteLine("Chuỗi đã cắt : " + str1.Substring(0, str1.Length - 2));
 
+            // Tách chuỗi 
+            string[] arrStr = str1.Split(',');
+            Console.WriteLine("Tách chuỗi str1 thành {0} và {1}\n", arrStr[0], arrStr[1]);
+
             // kiểm tra chuỗi 2 có là chuỗi con của chuỗi 1 ko
             if (str1.Contains(str2))
-                Console.WriteLine("{0} là chuỗi con " + "của chuỗi {1}", str2, str1);
+                Console.WriteLine("chuỗi {0} là chuỗi con " + "của chuỗi {1}\n", str2, str1);
             else
-                Console.WriteLine("{0} ko là chuỗi con " + "của chuỗi {1}", str2, str1);
-
+                Console.WriteLine("chuỗi {0} ko là chuỗi con " + "của chuỗi {1}\n", str2, str1);
+            // Kiểm tra vị trí xuất hiện của str2 trong str1 
+            Console.WriteLine("vị trí xuất hiện của str2 trong str1 : {0}\n", str1.IndexOf(str2));
             //thay thế chuỗi con vào 1 khoảng chuỗi cha
             if (str1.Contains("abc"))
             {
@@ -76,8 +88,8 @@ namespace Lam_Viec_Voi_Bien
                 // thay thế 2 kí tự cuối 
                 string strChon = str1.Substring(str1.Length - 2, 2);
                 string strThay2 = str1.Replace(strChon, str2);
-                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay);
-                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} ", strThay2);
+                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} \n", strThay);
+                Console.WriteLine("chuỗi str1 sau khi đc thay thế là : {0} \n", strThay2);
             }
 
             // Thao tác với mảng String
@@ -94,10 +106,10 @@ namespace Lam_Viec_Voi_Bien
                     if ((b[i] >= 'A' && b[i] <= 'Z'))
                         chu_hoa++;
 
-                    if (b[i] >= 'a' && b[i] <= 'z')
+                    else if (b[i] >= 'a' && b[i] <= 'z')
                         chu_thuong++;
 
-                    else if (b[i] >= '0' && b[i] <= '9')
+                    else if(b[i] >= '0' && b[i] <= '9')
                         chu_so++;
 
                     else ky_tu_dac_biet++;
@@ -109,19 +121,30 @@ namespace Lam_Viec_Voi_Bien
                 Console.WriteLine("số chữ số : {0}\n", chu_so);
                 Console.WriteLine("số kí tự đặc biệt : {0}\n", ky_tu_dac_biet);
                 i = 0;
+                chu_hoa = 0;
+                chu_thuong = 0;
+                ky_tu_dac_biet = 0;
+                chu_so = 0;
             }
 
+            // Xóa 1 phần trong chuỗi
+            Console.WriteLine("chuỗi sau khi xóa từ vị trí đầu đến 5 :{0}",str1.Remove(0,5));
+
             //Sao chép chuỗi
-            string[] strCop = new string[str1.Length];
-            i = 0;
-            while (i < str1.Length)
-            {
-                string a = str1[i].ToString();
-                strCop[i] = a;
-                i++;
-            }
-            Console.Write("\nIn chuoi ban dau: {0}\n", str1);
-            Console.WriteLine(" chuỗi đã cop : {0}\n ", string.Join("", strCop));
+            string strCop = String.Copy(str1);
+            Console.Write("\nChuỗi đã cop : {0}\n", strCop);
+
+            //// Hoặc
+            //string[] strCop = new string[str1.Length];
+            //i = 0;
+            //while (i < str1.Length)
+            //{
+            //    string a = str1[i].ToString();
+            //    strCop[i] = a;
+            //    i++;
+            //}
+            //Console.Write("\nIn chuoi ban dau: {0}\n", str1);
+            //Console.WriteLine(" chuỗi đã cop : {0}\n ", string.Join("", strCop));
 
         }
 

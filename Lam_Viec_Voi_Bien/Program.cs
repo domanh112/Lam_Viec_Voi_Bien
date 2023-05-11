@@ -12,86 +12,131 @@ namespace Lam_Viec_Voi_Bien
     {
         static void Main(string[] args)
         {
+            string path = @"C:\Users\Admin\source\repos\domanh112\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
+            int chon;
             Console.OutputEncoding = Encoding.UTF8;
-
             //Case_Data.Test_DataTable_DataSet_DataSet();
 
-            ////Sử dụng Datetime
-            //Case_Date.Test_Date_Time();
+            do
+            {
+                Console.WriteLine("----------Danh sách Case----------");
+                Console.WriteLine("----------------------------------");
+                Console.WriteLine("1. String.");
+                Console.WriteLine("2. Number.");
+                Console.WriteLine("3. DateTime.");
+                Console.WriteLine("4. DataTable");
+                Console.WriteLine("5. Json.");
+                Console.WriteLine("6. Close.");
+                Console.WriteLine("nhập vào lựa chọn :");
+                chon = Convert.ToInt32(Console.ReadLine());
 
-            ////Sử dụng Number
-            //Case_Number.Test_Number();
+                switch (chon)
+                {
+                    case 1:
+                        // Sử dụng String
+                        string str1 = @"abcde AKHDASDf,fedcb a1233--*)";
+                        string str2 = @"abc âôGDH ê+_+13123";
+                        Case_String.Test_String(str1, str2);
+                        break;
 
-            // Sử dụng String
-            string str1 = @"abcdef,fedcba";
-            string str2 = @"abcâôê";
-            Case_String.Test_String(str1,str2);
+                    case 2:
+                        //Sử dụng Number
+                        int n1 = 56; int n2 = 65;
+                        double n3 = 55.55532;
+                        Case_Number.Test_Number(n1,n2,n3);
+                        break;
 
-            //// Sử Dụng DataTable-DataSet
-            //// Tạo Bảng 
-            //string nameTable = "TestHamKhoiTao";
-            //string[] nameColumns = { "Id", "Name", "Email", "Salary" };
-            //Type[] type = { typeof(int), typeof(string), typeof(string), typeof(decimal) };
-            //DataTable TestHamKhoiTao = Case_Data.CreateDataTable(nameTable, nameColumns, type);
+                    case 3:
+                        //Sử dụng Datetime
+                        DateTime dt = DateTime.Now;
+                        Case_Date.Test_Date_Time(dt);
+                        break;
 
-            //// Thêm dữ liệu 
-            //TestHamKhoiTao.Rows.Add(101, "Cus1", "Manhdd@mic.vn1", 100000000);
-            //TestHamKhoiTao.Rows.Add(102, "Cus2", "Manhdd@mic.vn2", 100000000);
-            //TestHamKhoiTao.Rows.Add(103, "Cus3", "Manhdd@mic.vn3", 100000000);
-            //TestHamKhoiTao.Rows.Add(104, "Cus4", "Manhdd@mic.vn4", 100000000);
-            //TestHamKhoiTao.Rows.Add(105, "Cus5", "Manhdd@mic.vn5", 100000000);
+                    case 4:
+                        // Sử Dụng DataTable-DataSet
+                        // Tạo Bảng 
+                        string nameTable = "TestHamKhoiTao";
+                        string nameImportJson = "TestImportJson";
+                        string[] nameColumns = { "Id", "Name", "Email", "Salary" };
+                        Type[] type = { typeof(int), typeof(string), typeof(string), typeof(decimal) };
+                        DataTable TestHamKhoiTao = Case_Data.CreateDataTable(nameTable, nameColumns, type);
 
-            //// Hiển thị dữ liệu Có Filter
-            //Console.WriteLine("Bảng sau khi Filter (Id<105) : ");
-            //string filterData = @"Id<105";
-            //Case_Data.SelectDataTable(TestHamKhoiTao,filterData);
+                        DataTable TestImportJson = Case_Data.CreateDataTable(nameImportJson, nameColumns, type);
 
-            //int rowID = 102;
-            //// Sửa dữ liệu theo rowID
-            //Case_Data.EditRowById(TestHamKhoiTao, rowID);
+                        // Thêm dữ liệu 
+                        TestHamKhoiTao.Rows.Add(101, "Cus1", "Manhdd@mic.vn1", 100000000);
+                        TestHamKhoiTao.Rows.Add(102, "Cus2", "Manhdd@mic.vn2", 100000000);
+                        TestHamKhoiTao.Rows.Add(103, "Cus3", "Manhdd@mic.vn3", 100000000);
+                        TestHamKhoiTao.Rows.Add(104, "Cus4", "Manhdd@mic.vn4", 100000000);
+                        TestHamKhoiTao.Rows.Add(105, "Cus5", "Manhdd@mic.vn5", 100000000);
 
-            //// Xóa Dữ liệu theo rowID
-            //Case_Data.DeleteRowById(TestHamKhoiTao, rowID);
+                        // Hiển thị dữ liệu Có Filter
+                        Console.WriteLine("Bảng sau khi Filter (Id<105) : ");
+                        string filterData = @"Id<105";
 
-            //// Import Dữ liệu từ Json sang DataTable
-            //string path = @"C:\Users\Admin\source\repos\domanh112\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
-            //Case_Data.ImportData(TestHamKhoiTao,path);
+                        Case_Data.SelectDataTable(TestHamKhoiTao, filterData,nameTable);
 
-            //// Sử Dụng Json
-            //string path = @"C:\Users\Admin\source\repos\domanh112\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
-            //List<Employee> list = new List<Employee>();
+                        int rowID = 102;
+                        // Sửa dữ liệu theo rowID
+                        Case_Data.EditRowById(TestHamKhoiTao, rowID,nameTable);
 
-            //Employee employee = new Employee();
-            //employee.Id = 201;
-            //employee.Name = "Manh";
-            //employee.Email = "Manhdd@mic.vn";
-            //employee.Salary = 100000;
-            //list.Add(employee);
+                        // Xóa Dữ liệu theo rowID
+                        Case_Data.DeleteRowById(TestHamKhoiTao, rowID,nameTable);
 
-            //Employee employee2 = new Employee();
-            //employee2.Id = 202;
-            //employee2.Name = "Manh2";
-            //employee2.Email = "Manhdd@mic.vn2";
-            //employee2.Salary = 200000;
-            //list.Add(employee2);
-            //string resultJson = Case_Json.AddJson(list, path);
+                        // Import Dữ liệu từ Json sang DataTable
+                        Case_Data.ImportData(TestImportJson, path,nameImportJson);
 
-            //// Đưa dữ liệu vào dataTable để hiển thị theo dạng bảng
-            //DataTable dt = (DataTable)JsonConvert.DeserializeObject(resultJson, (typeof(DataTable)));
+                        Case_Data.CountData(TestHamKhoiTao, nameImportJson);
+                        break;
 
-            //DataRoTw[] rows = dt.Select();
+                    case 5:
+                        // Sử Dụng Json
+                        string nameJson = "Employee";
+                        List<Employee> list = new List<Employee>();
 
-            //// lấy ra 1 mảng chứa tên các cột trong dataTable để truyền vào bảng select
-            //string[] columnNames = dt.Columns.Cast<DataColumn>().Select(x => x.ColumnName).ToArray();
-            //var table = new ConsoleTable(columnNames);
+                        Employee employee = new Employee();
+                        employee.Id = 201;
+                        employee.Name = "Manh";
+                        employee.Email = "Manhdd@mic.vn";
+                        employee.Salary = 100000;
+                        list.Add(employee);
 
-            //// lấy dữ liệu từng row trong mảng row để thêm vào bảng select
-            //foreach (DataRow row in rows)
-            //{
-            //    table.AddRow(row.ItemArray);
-            //}
-            //table.Write(Format.MarkDown);
-            //Console.Read();
+                        Employee employee2 = new Employee();
+                        employee2.Id = 202;
+                        employee2.Name = "Manh2";
+                        employee2.Email = "Manhdd@mic.vn2";
+                        employee2.Salary = 200000;
+                        list.Add(employee2);
+
+                        Employee employee3 = new Employee();
+                        employee3.Id = 203;
+                        employee3.Name = "Manh3";
+                        employee3.Email = "Manhdd@mic.vn3";
+                        employee3.Salary = 300000;
+                        list.Add(employee3);
+
+                        // Thêm list dữ liệu vào file json
+                        Console.WriteLine("Thêm Dữ vào Json :");
+                        string resultJson = Case_Json.AddJson(list, path, nameJson);
+
+                        // Hiển thị file Json dạng bảng
+                        Console.WriteLine("Hiển thị file Json dạng bảng :");
+                        Case_Json.SelectDataJson(resultJson);
+
+                        // Lọc dữ liệu Json
+                        Console.WriteLine("Lọc dữ liệu Json :");
+                        Case_Json.FilterDataJson(path);
+
+                        // Xóa dữ liệu Json
+                        Console.WriteLine("Xóa dữ liệu Json :");
+                        Case_Json.DeleteDataJson(path);
+                        break;
+
+                    default:
+                        Console.WriteLine("hihi");
+                        break;
+                }
+            } while (chon < 6);
         }
     }
 }
