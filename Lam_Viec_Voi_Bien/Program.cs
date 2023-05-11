@@ -84,9 +84,16 @@ namespace Lam_Viec_Voi_Bien
                         Case_Data.DeleteRowById(TestHamKhoiTao, rowID,nameTable);
 
                         // Import Dữ liệu từ Json sang DataTable
-                        Case_Data.ImportData(TestImportJson, path,nameImportJson);
+                        DataTable dataTable = Case_Data.ImportData(TestImportJson, path,nameImportJson);
 
-                        Case_Data.CountData(TestHamKhoiTao, nameImportJson);
+                        // Count Dữ liệu DataTable
+                        Case_Data.CountData(dataTable, nameImportJson);
+
+                        //Order by Dữ liệu DataTable
+                        Case_Data.SortData(dataTable, nameImportJson);
+
+                        // Copy dữ liệu 
+                        Case_Data.CopData(dataTable);
                         break;
 
                     case 5:
@@ -96,21 +103,21 @@ namespace Lam_Viec_Voi_Bien
 
                         Employee employee = new Employee();
                         employee.Id = 201;
-                        employee.Name = "Manh";
+                        employee.Name = "Manh1";
                         employee.Email = "Manhdd@mic.vn";
                         employee.Salary = 100000;
                         list.Add(employee);
 
                         Employee employee2 = new Employee();
                         employee2.Id = 202;
-                        employee2.Name = "Manh2";
+                        employee2.Name = "Manh";
                         employee2.Email = "Manhdd@mic.vn2";
                         employee2.Salary = 200000;
                         list.Add(employee2);
 
                         Employee employee3 = new Employee();
                         employee3.Id = 203;
-                        employee3.Name = "Manh3";
+                        employee3.Name = "Manh";
                         employee3.Email = "Manhdd@mic.vn3";
                         employee3.Salary = 300000;
                         list.Add(employee3);

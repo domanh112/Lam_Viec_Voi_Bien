@@ -190,12 +190,12 @@ namespace Lam_Viec_Voi_Bien
                 table.AddRow(row.ItemArray);
             }
             table.Write(Format.MarkDown);
-            Console.Read();
         }
 
         // xóa theo rows ID
         public static void DeleteRowById(DataTable dataTable, int rowID, string nameTable)
         {
+            Console.WriteLine("Xóa dữ liệu :");
             string filterData ="";
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -204,11 +204,11 @@ namespace Lam_Viec_Voi_Bien
                     // Xóa row chứa ID khỏi bảng
                     dataTable.Rows.Remove(dataRow);
                     dataTable.AcceptChanges();
-                    Console.WriteLine("Xóa dữ liệu thành công !!!\n");
-                    Console.Read();
 
                     // Hiển thị dữ liệu sau khi đã xóa
                     SelectDataTable(dataTable,filterData, nameTable);
+                    Console.WriteLine("Xóa dữ liệu thành công !!!\n");
+
                     break;
                 }
             }
@@ -217,6 +217,7 @@ namespace Lam_Viec_Voi_Bien
         // Sửa dữ liệu theo rowID
         public static void EditRowById(DataTable dataTable, int rowID, string nameTable)
         {
+            Console.WriteLine("Sửa dữ liệu :");
             string filterData = "";
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -225,11 +226,11 @@ namespace Lam_Viec_Voi_Bien
                 {
                     dataRow["Name"] = "Manhdd";
                     dataTable.AcceptChanges();
-                    Console.WriteLine("Sửa dữ liệu thành công !!!\n");
-                    Console.Read();
 
                     // Hiển thị dữ liệu sau khi đã sửa
                     SelectDataTable(dataTable, filterData, nameTable);
+                    Console.WriteLine("Sửa dữ liệu thành công !!!\n");
+
                     break;
                 }
             }
@@ -237,27 +238,56 @@ namespace Lam_Viec_Voi_Bien
 
 
         // Import dữ liệu vào bảng
-        public static void ImportData(DataTable dataTable,string path, string nameTable)
+        public static DataTable ImportData(DataTable dataTable,string path, string nameTable)
         {
+            Console.WriteLine("Import dữ liệu :");
             string filterData = "";
             using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
                 dataTable = (DataTable)JsonConvert.DeserializeObject(json, (typeof(DataTable)));
-                Console.WriteLine("Import dữ liệu thành công !!!\n");
-                Console.Read();
 
                 SelectDataTable(dataTable, filterData, nameTable);
+                Console.WriteLine("Import dữ liệu thành công !!!\n");
             }
+            return dataTable;
         }
 
         // Count dữ liệu (Hàm tính toán)
         public static void CountData(DataTable dataTable, string nameTable)
         {
-            int sum = Convert.ToInt32(dataTable.Compute("SUM(Salary)", "Name = 'Cus2'"));
-            Console.WriteLine("Tổng Salary của bảng {1} : {0}", sum,nameTable);
+            Console.WriteLine("Count dữ liệu :");
+            decimal sum = Convert.ToInt32(dataTable.Compute("SUM(Salary)", "Name = 'manh'"));
+            Console.WriteLine("Tổng Salary của bảng {1} : {0}\n", sum,nameTable);
 
         }
+        
+        // Sort dữ liệu (Hàm tính toán)
+        public static void SortData(DataTable dataTable, string nameTable)
+        {
+            Console.WriteLine("Sort dữ liệu :");
+
+            string filterData = "";
+            var sortedRows = dataTable.AsEnumerable().OrderBy(r => r.Field<double>("Salary"));
+            DataTable sortedDt = sortedRows.CopyToDataTable();
+            SelectDataTable(sortedDt, filterData, nameTable);
+            Console.WriteLine("Sort dữ liệu thành công !!!\n");
+
+        }
+
+        // Cop dữ liệu (Hàm tính toán)
+        public static void CopData(DataTable dataTable)
+        {
+            Console.WriteLine("Cop dữ liệu :");
+            string nameTable = "DT Cop";
+            string filterData = "";
+            var copyedRows = dataTable.AsEnumerable();
+            DataTable copyedDt = copyedRows.CopyToDataTable();
+            SelectDataTable(copyedDt, filterData, nameTable);
+
+        }
+
+
 
     }
 }
