@@ -19,15 +19,15 @@ namespace Lam_Viec_Voi_Bien
 
             do
             {
-                Console.WriteLine("----------Danh sách Case----------");
-                Console.WriteLine("----------------------------------");
+                Console.WriteLine("-------------Danh sách Case-------------");
                 Console.WriteLine("1. String.");
                 Console.WriteLine("2. Number.");
                 Console.WriteLine("3. DateTime.");
                 Console.WriteLine("4. DataTable");
                 Console.WriteLine("5. Json.");
-                Console.WriteLine("6. Close.");
-                Console.WriteLine("nhập vào lựa chọn :");
+                Console.WriteLine("6. regEx.");
+                Console.WriteLine("7. Close.");
+                Console.WriteLine("nhập vào lựa chọn (1-7) :");
                 chon = Convert.ToInt32(Console.ReadLine());
 
                 switch (chon)
@@ -139,11 +139,23 @@ namespace Lam_Viec_Voi_Bien
                         Case_Json.DeleteDataJson(path);
                         break;
 
+                    case 6:
+                        string mail1 = @"Domanh112113114@gmail.com";
+                        string mail2 = @"Domanh112@gmail.com";
+                        string mail3 = @"Domanh112113@gmail.com";
+                        string mail5 = @"manh5@gmail.com";
+                        string mail4 = @"Manhcomdd@mic.vn";
+                        string text = mail1 + " " + mail2;
+
+                        string[] str_Text_Regex = { mail1, mail2, mail3, mail4, mail5, text };
+                        Case_regEx.Test_Regex(str_Text_Regex);
+                        break;
+
                     default:
                         Console.WriteLine("hihi");
                         break;
                 }
-            } while (chon < 6);
+            } while (chon < 7);
         }
     }
 }
