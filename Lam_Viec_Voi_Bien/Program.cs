@@ -12,7 +12,7 @@ namespace Lam_Viec_Voi_Bien
     {
         static void Main(string[] args)
         {
-            string path = @"C:\Users\Admin\source\repos\domanh112\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
+            string path = @"C:\Users\manhdd\source\repos\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
             int chon;
             Console.OutputEncoding = Encoding.UTF8;
             //Case_Data.Test_DataTable_DataSet_DataSet();
@@ -43,7 +43,7 @@ namespace Lam_Viec_Voi_Bien
                         //Sử dụng Number
                         int n1 = 56; int n2 = 65;
                         double n3 = 55.55532;
-                        Case_Number.Test_Number(n1,n2,n3);
+                        Case_Number.Test_Number(n1, n2, n3);
                         break;
 
                     case 3:
@@ -74,17 +74,17 @@ namespace Lam_Viec_Voi_Bien
                         Console.WriteLine("Bảng sau khi Filter (Id<105) : ");
                         string filterData = @"Id<105";
 
-                        Case_Data.SelectDataTable(TestHamKhoiTao, filterData,nameTable);
+                        Case_Data.SelectDataTable(TestHamKhoiTao, filterData, nameTable);
 
                         int rowID = 102;
                         // Sửa dữ liệu theo rowID
-                        Case_Data.EditRowById(TestHamKhoiTao, rowID,nameTable);
+                        Case_Data.EditRowById(TestHamKhoiTao, rowID, nameTable);
 
                         // Xóa Dữ liệu theo rowID
-                        Case_Data.DeleteRowById(TestHamKhoiTao, rowID,nameTable);
+                        Case_Data.DeleteRowById(TestHamKhoiTao, rowID, nameTable);
 
                         // Import Dữ liệu từ Json sang DataTable
-                        DataTable dataTable = Case_Data.ImportData(TestImportJson, path,nameImportJson);
+                        DataTable dataTable = Case_Data.ImportData(TestImportJson, path, nameImportJson);
 
                         // Count Dữ liệu DataTable
                         Case_Data.CountData(dataTable, nameImportJson);
@@ -99,13 +99,20 @@ namespace Lam_Viec_Voi_Bien
                     case 5:
                         // Sử Dụng Json
                         string nameJson = "Employee";
+                        string[] addNew = {"301","Manh","Manhdd@mic.vn","2000"};
                         List<Employee> list = new List<Employee>();
+                        List<Address> listAdd = new List<Address>();
+                        Address addr = new Address();
+                        addr.Num = "so 87";
+                        addr.Street = "Hoa Bang";
+                        listAdd.Add(addr);
 
                         Employee employee = new Employee();
                         employee.Id = 201;
                         employee.Name = "Manh1";
                         employee.Email = "Manhdd@mic.vn";
                         employee.Salary = 100000;
+                        //employee.Address = addr; 
                         list.Add(employee);
 
                         Employee employee2 = new Employee();
@@ -113,6 +120,7 @@ namespace Lam_Viec_Voi_Bien
                         employee2.Name = "Manh";
                         employee2.Email = "Manhdd@mic.vn2";
                         employee2.Salary = 200000;
+                        //employee2.Address = addr;
                         list.Add(employee2);
 
                         Employee employee3 = new Employee();
@@ -120,14 +128,17 @@ namespace Lam_Viec_Voi_Bien
                         employee3.Name = "Manh";
                         employee3.Email = "Manhdd@mic.vn3";
                         employee3.Salary = 300000;
+                        //employee3.Address = addr;
                         list.Add(employee3);
 
                         // Thêm list dữ liệu vào file json
                         Console.WriteLine("Thêm Dữ vào Json :");
-                        string resultJson = Case_Json.AddJson(list, path, nameJson);
+                        //Case_Json.AddnewJson(path, addNew);
+                        string resultJson = Case_Json.AddJson(list,path, nameJson);
 
                         // Hiển thị file Json dạng bảng
                         Console.WriteLine("Hiển thị file Json dạng bảng :");
+                        Case_Json.SelectNewDataJson(path);
                         Case_Json.SelectDataJson(resultJson);
 
                         // Lọc dữ liệu Json
@@ -136,7 +147,11 @@ namespace Lam_Viec_Voi_Bien
 
                         // Xóa dữ liệu Json
                         Console.WriteLine("Xóa dữ liệu Json :");
-                        Case_Json.DeleteDataJson(path);
+                        Case_Json.DeleteDataJson(path, nameJson);
+
+                        // Sửa dữ liệu Json
+                        Console.WriteLine("Sửa dữ liệu Json :");
+                        Case_Json.EditDataJson(path, nameJson);
                         break;
 
                     case 6:

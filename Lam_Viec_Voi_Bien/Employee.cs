@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace TaiLieuC
 {
+
     public class Employee
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public decimal Salary { get; set; }
-
-        //public int Id = 201;
-        //public string Name = "Manh";
-        //public string Email = "Manhdd@mic.vn";
-        //public decimal Salary = 100000;
+        //public Address Address { get; set; }
+       
+    }
+    public class Address
+    {
+        public string Num { get; set; }
+        public string Street { get; set; }
     }
 }
