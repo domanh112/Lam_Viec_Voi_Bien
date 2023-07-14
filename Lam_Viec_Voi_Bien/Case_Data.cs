@@ -245,7 +245,9 @@ namespace Lam_Viec_Voi_Bien
             using (StreamReader r = new StreamReader(path))
             {
                 string json = r.ReadToEnd();
-                dataTable = (DataTable)JsonConvert.DeserializeObject(json, (typeof(DataTable)));
+                string output2 = json.Replace("{\r\n  \"Employee\": ", "");
+                string output3 = output2.Replace("]\r\n}", "]");
+                dataTable = (DataTable)JsonConvert.DeserializeObject(output3, (typeof(DataTable)));
 
                 SelectDataTable(dataTable, filterData, nameTable);
                 Console.WriteLine("Import dữ liệu thành công !!!\n");

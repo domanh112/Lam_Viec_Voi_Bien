@@ -1,10 +1,14 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ConsoleTables;
+using LanguageExt.ClassInstances;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
+using System.Xml.Linq;
 using TaiLieuC;
+using static TaiLieuC.CaseJson2;
 
 namespace Lam_Viec_Voi_Bien
 {
@@ -12,9 +16,17 @@ namespace Lam_Viec_Voi_Bien
     {
         static void Main(string[] args)
         {
+
+            Example ex = new Example() { orders = new List<Order>() };
+            List<Orderdetail> lstO_detail = new List<Orderdetail>() { };
+
             string path = @"C:\Users\manhdd\source\repos\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\employee.json";
+            string pathCre = @"C:\Users\manhdd\source\repos\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\university.json";
+            string pathRUD = @"C:\Users\manhdd\source\repos\Lam_Viec_Voi_Bien\Lam_Viec_Voi_Bien\bin\Debug\net7.0\Orders.json";
+
             int chon;
             Console.OutputEncoding = Encoding.UTF8;
+            Console.BackgroundColor = ConsoleColor.Black;
             //Case_Data.Test_DataTable_DataSet_DataSet();
 
             do
@@ -26,8 +38,12 @@ namespace Lam_Viec_Voi_Bien
                 Console.WriteLine("4. DataTable");
                 Console.WriteLine("5. Json.");
                 Console.WriteLine("6. regEx.");
-                Console.WriteLine("7. Close.");
-                Console.WriteLine("nhập vào lựa chọn (1-7) :");
+                Console.WriteLine("7. CreateFileJson.");
+                Console.WriteLine("8. ReadFileJson.");
+                Console.WriteLine("9. UpdateFileJson.");
+                Console.WriteLine("10. DeleteItemFileJson.");
+                Console.WriteLine("11. Close.");
+                Console.WriteLine("nhập vào lựa chọn (1-11) :");
                 chon = Convert.ToInt32(Console.ReadLine());
 
                 switch (chon)
@@ -99,7 +115,7 @@ namespace Lam_Viec_Voi_Bien
                     case 5:
                         // Sử Dụng Json
                         string nameJson = "Employee";
-                        string[] addNew = {"301","Manh","Manhdd@mic.vn","2000"};
+                        string[] addNew = { "301", "Manh", "Manhdd@mic.vn", "2000" };
                         List<Employee> list = new List<Employee>();
                         List<Address> listAdd = new List<Address>();
                         Address addr = new Address();
@@ -112,7 +128,7 @@ namespace Lam_Viec_Voi_Bien
                         employee.Name = "Manh1";
                         employee.Email = "Manhdd@mic.vn";
                         employee.Salary = 100000;
-                        //employee.Address = addr; 
+                        //employee.Address = JsonConvert.SerializeObject(addr);
                         list.Add(employee);
 
                         Employee employee2 = new Employee();
@@ -120,7 +136,7 @@ namespace Lam_Viec_Voi_Bien
                         employee2.Name = "Manh";
                         employee2.Email = "Manhdd@mic.vn2";
                         employee2.Salary = 200000;
-                        //employee2.Address = addr;
+                        //employee2.Address = JsonConvert.SerializeObject(addr);
                         list.Add(employee2);
 
                         Employee employee3 = new Employee();
@@ -128,30 +144,31 @@ namespace Lam_Viec_Voi_Bien
                         employee3.Name = "Manh";
                         employee3.Email = "Manhdd@mic.vn3";
                         employee3.Salary = 300000;
-                        //employee3.Address = addr;
+                        //employee3.Address = JsonConvert.SerializeObject(addr);
                         list.Add(employee3);
 
-                        // Thêm list dữ liệu vào file json
-                        Console.WriteLine("Thêm Dữ vào Json :");
+                        //// Thêm list dữ liệu vào file json
+                        //Console.WriteLine("Thêm Dữ vào Json :");
                         //Case_Json.AddnewJson(path, addNew);
-                        string resultJson = Case_Json.AddJson(list,path, nameJson);
+                        //string resultAddJson = Case_Json.AddJson(list, path, nameJson);
 
-                        // Hiển thị file Json dạng bảng
-                        Console.WriteLine("Hiển thị file Json dạng bảng :");
-                        Case_Json.SelectNewDataJson(path);
-                        Case_Json.SelectDataJson(resultJson);
+                        //// Hiển thị file Json dạng bảng
+                        //Console.WriteLine("Hiển thị file Json dạng bảng :");
+                        ////Case_Json.SelectNewDataJson(path);
+                        //Case_Json.SelectDataJson(resultAddJson);
 
-                        // Lọc dữ liệu Json
-                        Console.WriteLine("Lọc dữ liệu Json :");
-                        Case_Json.FilterDataJson(path);
+                        //// Lọc dữ liệu Json
+                        //Console.WriteLine("Lọc dữ liệu Json :");
+                        //Case_Json.FilterDataJson(path);
 
-                        // Xóa dữ liệu Json
-                        Console.WriteLine("Xóa dữ liệu Json :");
-                        Case_Json.DeleteDataJson(path, nameJson);
+                        //// Xóa dữ liệu Json
+                        //Console.WriteLine("Xóa dữ liệu Json :");
+                        //Case_Json.DeleteDataJson(path, nameJson);
 
-                        // Sửa dữ liệu Json
-                        Console.WriteLine("Sửa dữ liệu Json :");
-                        Case_Json.EditDataJson(path, nameJson);
+                        //// Sửa dữ liệu Json
+                        //Console.WriteLine("Sửa dữ liệu Json :");
+                        //Case_Json.EditDataJson(path, nameJson);
+
                         break;
 
                     case 6:
@@ -166,11 +183,59 @@ namespace Lam_Viec_Voi_Bien
                         Case_regEx.Test_Regex(str_Text_Regex);
                         break;
 
+                    case 7:
+                        ClassUniversities university1 = new ClassUniversities();
+
+                        university1.universities = new Universities();
+                        university1.universities.university = "South Carolina StateUniversity";
+
+                        List<Student> listStudent = new List<Student>();
+                        Student student1 = new Student
+                        {
+                            name = "StephenCousins"
+                        };
+                        Student student2 = new Student
+                        {
+                            name = "Austin A. Newton"
+                        };
+                        Student student3 = new Student
+                        {
+                            name = "Adam Wilhite"
+                        };
+                        Student student4 = new Student
+                        {
+                            name = "Enis Kurtay YILMAZ"
+                        };
+
+                        listStudent.Add(student1);
+                        listStudent.Add(student2);
+                        listStudent.Add(student3);
+                        listStudent.Add(student4);
+
+                        university1.universities.students = listStudent;
+                        Jsonnnnnnnnnnn.CreateFileJson(pathCre, university1);
+                       
+                        break;
+
+                    case 8:
+                        Jsonnnnnnnnnnn.ReadFileJson(pathRUD,ex);
+                        break;
+                        
+                    case 9:
+                        string No = "1";
+                        Jsonnnnnnnnnnn.UpdateFileJson(pathRUD,ex, No);
+                        break;
+                           
+                    case 10:
+                        Jsonnnnnnnnnnn.DeleteFileJson(pathRUD,ex);
+                        break;
+
+
                     default:
                         Console.WriteLine("hihi");
                         break;
                 }
-            } while (chon < 7);
+            } while (chon < 10);
         }
     }
 }
